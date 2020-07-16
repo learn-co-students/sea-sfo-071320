@@ -37,6 +37,7 @@
 * [ ] Practice keeping groups of data related to classes on the class as a class variable
 * [ ] Demonstrate _Single Source of Truth_ by **not** storing collections of objects on other objects
 * [ ] Demonstrate _Single Source of Truth_ by **not** storing one object in multiple collections
+
 ## Deliverables
 * Create a Mountain class. The class should have these methods:
   * [ ] `initialize` which takes a mountain name(and other attributes) and have
