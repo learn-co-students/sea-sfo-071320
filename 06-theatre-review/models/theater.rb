@@ -13,4 +13,20 @@ class Theater
         @@all
     end
 
+    def performances
+        #Talk to Performance
+        Performance.all.select do |performance|
+            # binding.pry
+            self == performance.theater
+        end
+        # binding.pry
+    end
+
+    def theaters
+        # binding.pry
+        self.performances.collect do |performances|
+            performances.musicals
+        end
+    end
+
 end
