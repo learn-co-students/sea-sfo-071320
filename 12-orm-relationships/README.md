@@ -65,3 +65,9 @@ Terminology/Notes:
 - DB columns -> Ruby attributes(instance variables)
 - DB rows -> Ruby instances
 
+### For Mass Assignment
+- When you are creating Ruby instances in your project not from a Database you will be passign in key value pairs: 
+```Ruby
+  Hike.new({"name" =>  "New Hike", "mountain_id" =>  1, "person_id" =>  2, "id" =>  nil})
+```
+

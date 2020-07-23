@@ -40,4 +40,11 @@ class Person
         sql = "INSERT INTO people(name) VALUES(?);"
         hikes = DB.execute(sql, name)
     end
+
+    def hikes
+        # binding.pry
+        # hikes = DB.execute("SELECT * FROM hikes INNER JOIN people ON people.id == hikes.person_id")
+        hikes = DB.execute("SELECT * FROM hikes WHERE person_id = ?", id)
+        hikes.map { |hike| Hike.new(hike) } 
+    end
 end
