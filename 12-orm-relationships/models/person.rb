@@ -27,4 +27,17 @@ class Person
         sql = "CREATE TABLE people(id INTEGER PRIMARY KEY, name TEXT)"
         people = DB.execute(sql)
     end
+
+    ## UPDATE to the schema
+    def self.add_column(column_name, column_type)
+        # binding.pry
+        sql = "ALTER TABLE people ADD COLUMN ? ?;"
+        hikes = DB.execute(sql, column_name, column_type)
+    end
+
+    def insert_data
+        # binding.pry
+        sql = "INSERT INTO people(name) VALUES(?);"
+        hikes = DB.execute(sql, name)
+    end
 end

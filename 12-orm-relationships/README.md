@@ -50,7 +50,7 @@ Terminology/Notes:
   ##### Update: Data
   ```SQL
     - UPDATE people SET name = 'Soundaryaa' WHERE id = 1
-  ``
+  ```
   ##### Delete: Data
   ```SQL
     DELETE FROM people WHERE name = 'Soundaryaa'
