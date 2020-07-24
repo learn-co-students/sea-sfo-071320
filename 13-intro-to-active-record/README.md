@@ -20,10 +20,12 @@
     .delete/destroy
     .destroy_all
     .find
+    .find_by
     .first
     .id
     .new
     .save
+    .where
     .update
 
   # Associations in Active Record!! 
@@ -34,3 +36,8 @@
 
     #and so many more!!
   ```
+
+## CRUD -> Schema  ( where we modify the actual tables/columns)
+ -  `ActiveRecord::Migration`
+## CRUD -> Data ( where we modify values inside of the table ( rows ))
+  - `ActiveRecord::Base`
