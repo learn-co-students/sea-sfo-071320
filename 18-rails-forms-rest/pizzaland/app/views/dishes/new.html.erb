@@ -1,0 +1,25 @@
+<h1>Create a new dish</h1>
+
+<%= form_for @dish do |f| %>
+	<div class="input-wrapper">
+		<%= f.label :name %>
+		<%= f.text_field :name %>
+	</div>
+
+	<div class="input-wrapper">
+		<%= f.label :cost %>
+		<%= f.text_field :cost %>
+	</div>
+
+	<div class="input-wrapper">
+		<%= f.label :size %>
+		<%= f.text_field :size %>
+	</div>
+
+	<div>
+		<%= f.check_box :extra_cheese %>
+		<%= f.label :extra_cheese %>
+	</div>
+
+	<%= f.submit %>
+<% end %>
