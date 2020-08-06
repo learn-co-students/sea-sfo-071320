@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Gamify</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+    <link
+      href="https://fonts.googleapis.com/css?family=Josefin+Sans|Press+Start+2P&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+
+  <body>
+    <nav>
+      <a href="/">Home</a>
+      <a href="/games">All Games</a>
+      <a href="/games/new">New Game</a>
+    </nav>
+    
+    <main>
+      <%= yield %>
+    </main>
+  </body>
+</html>

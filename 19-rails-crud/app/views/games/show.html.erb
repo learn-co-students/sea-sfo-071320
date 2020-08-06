@@ -1,0 +1,6 @@
+<h1><%= @game.title %></h1>
+<img src="<%= @game.image_url %>" alt="">
+<p><%= @game.description %></p>
+
+<%= link_to "Edit", edit_game_path(@game), class: "button" %>
+<%= link_to "Delete", game_path(@game), method: "delete", class: "button" %>

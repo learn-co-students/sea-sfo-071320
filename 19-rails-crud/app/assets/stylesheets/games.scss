@@ -1,0 +1,26 @@
+// Place all the styles related to the games controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: https://sass-lang.com/
+
+.games {
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	grid-gap: 15px;
+
+	img {
+		height: 200px;
+		object-fit: cover;
+	}
+
+	.title {
+		text-decoration: none;
+		color: lightcoral;
+		font-size: 19px;
+	}
+}
+
+@media (max-width: 550px) {
+	.games {
+		grid-template-columns: 1fr;
+	}
+}
