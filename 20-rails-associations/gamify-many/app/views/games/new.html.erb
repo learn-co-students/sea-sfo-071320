@@ -1,0 +1,44 @@
+<h1>Create a new game</h1>
+
+<!-- show error messages -->
+
+<% if @game.errors.any? %>
+	<ul>
+	<% @game.errors.full_messages.each do |msg| %>
+		<li><%= msg %></li>
+	<% end %>
+	</ul>
+<% end %>
+
+<%= form_for @game do |f| %>
+	<%= f.label :title %>
+	<%= f.text_field :title %>
+
+	<%= f.label :description %>
+	<%= f.text_area :description %>
+	
+	<%= f.label :image_url %>
+	<%= f.text_field :image_url %>
+
+  <%= f.submit "Create new Game" %>
+<% end %>
+
+
+<!-- <%#= form_with model: @game, local: true do |f| %>
+	<%#= f.label :title %>
+	<%#= f.text_field :title %>
+
+	<%#= f.label :description %>
+	<%#= f.text_area :description %>
+	
+	<%#= f.label :image_url %>
+	<%#= f.text_field :image_url %>
+
+  <%#= f.submit "Create new Game" %>
+<%# end %> -->
+
+<!-- <%#= form_with(url: "/search", method: "post") do %>
+  <%#= label_tag(:q, "Search for:") %>
+  <%#= text_field_tag(:q) %>
+  <%#= submit_tag("Search") %>
+<%# end %> -->

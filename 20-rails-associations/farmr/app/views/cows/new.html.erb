@@ -1,0 +1,33 @@
+<h1>Create a new cow</h1>
+
+<!-- <%#= form_for @cow do |f| %> -->
+<%= form_with model: @cow, local: true do |f| %>
+	<%= f.label :name %>
+	<%= f.text_field :name %>
+
+	<%= f.label :spots, "Number of spots" %>
+	<%= f.number_field :spots %>
+
+	<%= f.label :farmer_id %>
+	<%= f.collection_select :farmer_id, @farmers, :id, :name %>
+
+	<%= f.submit "Create this new cow" %>
+<% end %>
+
+<%= link_to "Show all cows", "/cows/#{@cow.id}/edit" %>
+
+<% if @cow.errors.any? %>
+	<h2>Errors (you need to fix this!)</h2>
+	<ul>
+		<% @cow.errors.full_messages.each do |error| %>
+			<li><%= error %></li>
+		<% end %>
+	</ul>
+<% end %>
+
+
+
+
+<!-- <%#= link_to cow_path(@cow.id) %>
+<%#= link_to cow_path(@cow) %>
+<%#= link_to @cow %> -->

@@ -1,0 +1,11 @@
+<h1>All Games</h1>
+
+<div class="games">
+	<% @games.each do |game| %>
+		<div>
+			<img src="<%= game.image_url %>" alt="">
+			<%= link_to game.title, game, class: "title" %>
+			<div class="description"><%= game.description %></div>
+		</div>
+	<% end %>
+</div>
