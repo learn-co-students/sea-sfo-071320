@@ -1,0 +1,31 @@
+<!-- <%# if @reservation.errors.any? %>
+	<ul>
+	<%# @reservation.errors.full_messages.each do |error| %>
+		<li><%#= error %></li>
+	<%# end %>
+	</ul>
+<%# end %> -->
+
+<% if flash[:error] %>
+	<ul>
+	<% flash[:error].each do |error| %>
+		<li><%= error %></li>
+	<% end %>
+	</ul>
+<% end %>
+
+<%= form_for @reservation do |f| %>
+	<%= f.label :date %>
+	<%= f.date_field :date %>
+
+	<%= f.label :party_size %>
+	<%= f.number_field :party_size %>
+
+	<%= f.label :restaurant_id %>
+	<%= f.collection_select :restaurant_id, Restaurant.all, :id, :name %>
+
+	<%= f.label :customer_id %>
+	<%= f.collection_select :customer_id, Customer.all, :id, :name %>
+
+	<%= f.submit button_text %>
+<% end %>
