@@ -1,0 +1,19 @@
+<h1>Sign Up</h1>
+
+<% if flash[:errors] %>
+  <% flash[:errors].each do |e| %>
+    <strong style='color: red;'><%= e %></strong>
+    <br/><br/>
+  <% end %>
+<% end %>
+
+<%= form_with model: @user, url: '/users', method: 'POST' do |f| %>
+  <%= f.label :name %>
+  <%= f.text_field :name %>
+  <%= f.label :username %>
+  <%= f.text_field :username %>
+  <%= f.submit "Sign UP!!" %>
+<% end %>
+
+<br/><br/>
+<%= link_to "Sign In", home_path %>
