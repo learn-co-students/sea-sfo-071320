@@ -1,3 +1,20 @@
-
 <h1>All Pets</h1>
 
+<div id="pets">
+	<% @pets.each do |pet| %>
+		<div class="pet">
+			<img src="<%= pet.image_url %>" alt="">
+
+			<div class="info">
+				<h2><%= pet.name %></h2>
+				<p class="description"><%= pet.description %></p>
+				<div class="attribute-wrapper">
+					<p>Species: <%= pet.species %></p>
+					<p># of Legs: <%= pet.number_of_legs %></p>
+					<p>Size: <%= pet.size %></p>
+					<p>Grumpiness: <%= pet.grumpiness %></p>
+				</div>
+			</div>
+		</div>
+	<% end %>
+</div>
