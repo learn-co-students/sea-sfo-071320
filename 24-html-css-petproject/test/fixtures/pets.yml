@@ -1,0 +1,19 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  breed: MyString
+  number_of_legs: 1
+  size: MyString
+  grumpiness: MyString
+  description: MyString
+  why_i_like_it: MyString
+
+two:
+  name: MyString
+  breed: MyString
+  number_of_legs: 1
+  size: MyString
+  grumpiness: MyString
+  description: MyString
+  why_i_like_it: MyString
