@@ -1,0 +1,19 @@
+{
+  "ice-creams": [
+    {
+      "flavor": "netflix & chilled",
+      "deliciousness": "4",
+      "id": 1
+    },
+    {
+      "flavor": "Rocky road",
+      "deliciousness": "5",
+      "id": 2
+    },
+    {
+      "flavor": "Chocolate Chippp",
+      "deliciousness": "3",
+      "id": 3
+    }
+  ]
+}
