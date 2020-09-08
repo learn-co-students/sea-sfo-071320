@@ -6,7 +6,7 @@ end
 def o_of_n(array)
   #the effort that it takes to perform the operation is directly related to the size of the input "Linear Time"
   array.each do |el|
-    puts |el|
+    puts el
   end
 end
 
