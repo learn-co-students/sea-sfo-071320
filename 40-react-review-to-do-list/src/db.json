@@ -1,0 +1,49 @@
+{
+  "todos": [
+    {
+      "id": 200,
+      "content": "Clean dishes",
+      "completed": false
+    },
+    {
+      "id": 202,
+      "content": "create React app",
+      "completed": false
+    },
+    {
+      "id": 203,
+      "content": "Create Rails backend",
+      "completed": false
+    },
+    {
+      "id": 204,
+      "content": "call Mom",
+      "completed": false
+    },
+    {
+      "id": 205,
+      "content": "Zoom hangout",
+      "completed": false
+    },
+    {
+      "id": 206,
+      "content": "Study Algorithms",
+      "completed": false
+    },
+    {
+      "id": 207,
+      "content": "Study data structures",
+      "completed": true
+    },
+    {
+      "id": 208,
+      "content": "Update Resume",
+      "completed": false
+    },
+    {
+      "id": 209,
+      "content": "Porfolio Website",
+      "completed": true
+    }
+  ]
+}
