@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import './App.css';
 import TodosContainer from './containers/TodosContainer';
-// import CompletedToDosContainer from './containers/CompletedTodosContainer';
+import CompletedToDosContainer from './containers/CompletedTodosContainer';
 import NewTodoForm from './components/NewTodoForm';
 
 const ENDPOINT = 'http://localhost:6001/todos';
@@ -16,12 +16,19 @@ class App extends Component {
     fetch(ENDPOINT)
       .then((resp) => resp.json())
       .then((todos) => {
-        this.setState({ todos: todos });
+        this.setState({
+          todos: todos,
+        });
       });
   }
 
+  completedTodos = () => {
+    return this.state.todos.filter((todo) => todo.completed === true);
+  };
+
   handleComplete = (todo) => {
     const id = todo.id;
+
     this.setState((prevState) => ({
       todos: prevState.todos.map((todo) =>
         todo.id === id ? { ...todo, completed: !todo.completed } : todo
@@ -94,12 +101,18 @@ class App extends Component {
         />
 
         <TodosContainer
-          todos={this.state.todos}
+          todos={this.state.todos.filter((todo) => !todo.completed)}
           handleComplete={this.handleComplete}
           deleteTask={this.deleteTask}
         />
 
-        {/* <CompletedToDosContainer /> */}
+        <h2>Completed Todos</h2>
+        <TodosContainer
+          todos={this.completedTodos()}
+          message={'Paint more Minis'}
+          handleComplete={this.handleComplete}
+          deleteTask={this.deleteTask}
+        />
       </div>
     );
   }

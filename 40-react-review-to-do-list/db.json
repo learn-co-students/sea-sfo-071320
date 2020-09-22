@@ -1,16 +1,6 @@
 {
   "todos": [
     {
-      "id": 200,
-      "content": "Clean dishes",
-      "completed": true
-    },
-    {
-      "id": 202,
-      "content": "create React app",
-      "completed": false
-    },
-    {
       "id": 204,
       "content": "call Mom",
       "completed": false
@@ -36,14 +26,9 @@
       "completed": false
     },
     {
-      "id": 209,
-      "content": "Porfolio Website",
-      "completed": true
-    },
-    {
-      "content": "Review Lecture",
+      "content": "Give Someone a Complement",
       "completed": false,
-      "id": 210
+      "id": 209
     }
   ]
 }

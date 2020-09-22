@@ -2,6 +2,17 @@ import React, { Component } from 'react';
 import Todo from '../components/Todo';
 
 class CompletedTodosContainer extends Component {
+  displayTodos = () => {
+    return this.props.todos.map((todo) => (
+      <Todo
+        key={todo.id}
+        todo={todo}
+        handleComplete={this.props.handleComplete}
+        deleteTask={this.props.deleteTask}
+      />
+    ));
+  };
+
   render() {
     return (
       <div>
@@ -12,9 +23,10 @@ class CompletedTodosContainer extends Component {
             <tr>
               <th>Item</th>
               <th>Undo Complete</th>
+              <th>Delete</th>
             </tr>
 
-            {/* Render your completed todos here */}
+            {this.displayTodos()}
           </tbody>
         </table>
       </div>
