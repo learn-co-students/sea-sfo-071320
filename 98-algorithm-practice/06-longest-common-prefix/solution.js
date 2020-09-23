@@ -1,0 +1,5 @@
+// Janu
+
+function longestCommonPrefix(arr){
+
+}
