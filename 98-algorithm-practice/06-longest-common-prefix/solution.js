@@ -1,8 +1,44 @@
 // Janu
 
-function longestCommonPrefix(arr){
-
-}
+const longestCommonPrefix = function(strs) {
+  let idx = 1
+  let obj = {}
+  let longestWord = strs.sort((a,b)=> a.length - b.length)[strs.length-1]
+  
+  while(idx < longestWord.length){
+  
+    strs.forEach(word => {
+      for(let i=0; i<strs.length; i++){
+        if(word.slice(0,[idx]) === strs[i].slice(0,[idx]))
+        {
+          if(obj[word.slice(0,[idx])]){
+            !obj[word.slice(0,[idx])].includes(strs[i]) && obj[word.slice(0,[idx])].push(strs[i])
+          } else {
+            obj[word.slice(0,[idx])] = []
+            !obj[word.slice(0,[idx])].includes(word) && obj[word.slice(0,[idx])].push(word)
+            !obj[word.slice(0,[idx])].includes(strs[i]) && obj[word.slice(0,[idx])].push(strs[i])
+          }
+        }
+      }
+    })
+    idx++
+  }
+  let keyCount = 1 
+  let wordCount = 0
+  let finalKV = ''
+  for (const [key, value] of Object.entries(obj)){
+    if(key.length > keyCount ){
+      if (value.length >= wordCount){
+        keyCount = key.length
+        wordCount = value.length 
+        if(keyCount > 1 && wordCount > 1){
+          finalKV = key
+        }
+      }
+    }
+  }
+  return finalKV 
+};
 
 
 // nathan
