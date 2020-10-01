@@ -1,5 +1,6 @@
 node_modules/
 .DS_Store
+.prettierrc
 
 # Ignore bundler config.
 /.bundle
