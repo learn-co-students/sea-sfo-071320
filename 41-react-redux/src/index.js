@@ -3,6 +3,21 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import logo from "./logo.svg";
 import "./App.css";
+import { createStore } from 'redux'
+
+const initialState = {
+  count: 0,
+  friends: [],
+  loading: false
+}
+
+const reducer = (oldstate = initialState, action) => {
+  console.log("oldState: ", oldstate)
+  console.log("action: ", action)
+  return oldstate
+}
+
+const store = createStore(reducer)
 
 class App extends Component {
   state = { count: 0 };
@@ -60,3 +75,5 @@ class Counter extends Component {
 }
 
 ReactDOM.render(<App />, document.getElementById("root"));
+
+debugger
