@@ -1,4 +1,6 @@
 import React from "react";
+import { connect } from 'react-redux'
+import { changeSearchText } from '../redux/actions'
 
 const Searchbar = props => (
   <div className="ui container">
@@ -14,4 +16,16 @@ const Searchbar = props => (
   </div>
 );
 
-export default Searchbar;
+const mapStateToProps = state => {
+  return {
+    value: state.searchText
+  }
+}
+
+// const mapDispatchToProps = dispatch => {
+//   return {
+//     onChange: value => dispatch(changeSearchText(value))
+//   }
+// }
+
+export default connect(mapStateToProps, { onChange: changeSearchText })(Searchbar);

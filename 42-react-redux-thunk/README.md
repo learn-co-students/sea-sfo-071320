@@ -104,3 +104,259 @@ const mapStateToProps = (state) => {
 ## Action Creators
 
 ## `combineReducers`
+
+
+
+# Redux BindActionCreators
+
+## Overview
+
+Our goal today is to practice adding features to an app with redux. We'll cover:
+
+- Revisiting Thinking in Redux
+- `mapDispatchToProps`
+- Action Creators
+- bindActionCreators
+- `connect` syntactic sugar 
+
+## Thinking in Redux
+
+
+1. Figure out the "shape" of your state
+2. Add 'static' version of state using Redux
+  - Create 'default' reducers with initial values (or maybe mock data)
+  - Connect state to components with `mapStateToProps`
+3. Figure out how state changes over time
+  - List the actions that will be triggered in your app
+  - Decide how your state should change in response to each action
+
+Actions                      ->    response in the reducer
+
+X changing the search text (value) ->  change the search text
+
+update the painting details      ->  change the painting details
+vote on a particular painting    ->  painting.votes increases by 1
+
+4. Implement actions and reducers
+  - Write action creators
+  - Write cases in reducers that correspond to each action
+  - Connect actions to components with `mapDispatchToProps`
+
+## `mapDispatchToProps`
+
+Like `mapStateToProps` but for the actions that our component can take.
+
+Should pass functions as the props!
+
+## Action Creators
+
+- Function that creates an action
+
+## bindActionCreators
+
+[In the Redux docs](https://redux.js.org/api/bindactioncreators)
+
+There's a common pattern when we're defining mapDispatchToProps with action creators - we want functions that are basically the same, but they dispatch the results. `bindActionCreators` takes in an object of action creators and the dispatch function, and 'binds' them. It returns new functions that do the same thing, but the results are immediately dispatched.
+
+That gives us a nice shortcut when we're defining mapDispatch to props:
+
+```js
+import { updateSearchText } from '../redux/actions'
+const actionCreators = {
+  updateSearchText: updateSearchText
+}
+const mapDispatchToProps = dispatch => bindActionCreators(actionCreators, dispatch);
+connect(null, mapDispatchToProps)(Searchbar)
+```
+
+## Sugar
+
+`connect` will do it for us.
+
+```js
+import { updateSearchText } from '../redux/actions';
+
+connect(null, { updateSearchText })(Searchbar)
+```
+
+
+# Redux Thunk
+
+[Diagrams of Thunk Architecture](http://codesheep.io/2017/01/06/redux-architecture/)
+
+## Overview
+
+- problem: async actions in redux
+- redux thunk plumbing
+- What is a thunk
+- middleware pattern
+
+## Async actions in redux
+
+In vanilla React, we'd do our fetch in componentDidMount. Now that we're using redux, we dispatch actions instead of setting the state:
+
+```js
+componentDidMount() {
+  fetch(URL)
+    .then(res => res.json())
+    .then(paintings => this.props.fetchedPaintings(paintings)))
+}
+```
+
+We want to move our logic out of our components and into redux.
+
+Why?
+
+1. Components shouldn't know about state management logic. If we delete this component, we might still want to load the paintings. One goal of redux is to decouple our components from our state.
+2. We want more control over how our actions work. For instance, we want to dispatch a 'FETCHING' action before our fetch so that we can show a spinner
+3. We might want to access something else in the store, just for the action. We don't want to pollute this component with extra data if we can avoid it
+
+## Solution: Redux Thunk
+
+- Thunk lets us write more complex action creators
+- Instead of returning action objects, action creators can return _thunks_
+
+**Thunk**: a function we can dispatch
+
+Thunks get in the dispatch function as an argument, so they can dispatch further actions.
+
+## Thunk Plumbing
+
+`yarn add redux-thunk`
+
+```
+import { createStore, applyMiddleware, compose } from 'redux'
+import thunk from 'redux-thunk'
+
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+createStore(reducer, composeEnhancers(applyMiddleware(thunk)))
+```
+
+Now we can use thunks!
+
+## Using Thunks
+
+Now our actionCreators can return thunk actions - functions that will get called with `dispatch`.
+
+```js
+// plain old actionCreator
+const fetchedPaintings = (paintings) => {
+  return { type: "FETCHED_PAINTINGS", paintings }
+}
+
+// Thunk actionCreator
+const fetchPaintings = () => {
+  return (dispatch) => {
+    fetch(URL)
+      .then(res => res.json())
+      .then(paintings => dispatch(fetchedPaintings(paintings))) 
+  }
+}
+```
+
+Now, in our component, we can just call the prop function:
+
+```js
+componentDidMount() {
+  this.props.fetchPaintings();
+}
+```
+
+## Spinner
+
+We did all this thunking so that we could introduce a new state 'loading' - let's actually add that!
+
+```js
+const loadingPaintings = () => {
+  return {type: "LOADING_PAINTINGS" }
+}
+
+const fetchPaintings = () => {
+  return (dispatch) => {
+    dispatch(loadingPaintings())
+    fetch(URL)
+      .then(res => res.json())
+      .then(paintings => dispatch(fetchedPaintings(paintings))) 
+  }
+}
+```
+
+We can dispatch multiple times from a thunk! This is handy when we want to do something immediately, and something else async, or when we want to compose multiple actions into a single dispatch (e.g. "load and select user")
+
+## Middleware Pattern
+
+Let's take another look at this 'middleware' pattern.
+
+All of redux-thunk:
+
+```js
+function createThunkMiddleware(extraArgument) {
+  return ({ dispatch, getState }) => next => action => {
+    if (typeof action === 'function') {
+      return action(dispatch, getState, extraArgument);
+    }
+
+    return next(action);
+  };
+}
+
+const thunk = createThunkMiddleware();
+thunk.withExtraArgument = createThunkMiddleware;
+
+export default thunk;
+```
+
+The middleware - like our root reducer - gets called for each of the actions that get dispatched to the store. Instead of getting in the state, it gets in the `dispatch` and `getState` functions, as well as the `next` middleware in the sequence.
+
+It can do whatever it wants with the action, and then call the `next` middleware in the line with the action. In this case, thunk takes any of the actions that are functions and invokes them. Any actions that aren't functions, it 'ignores' by passing them to the next middleware unchanged.
+
+## More complex thunks
+
+Now that we are loading our paintings in from the server, lets make our increaseVotes and updatePainting actions actually save the new data to our server. 
+
+With thunk action creators, we can change this logic 'under the hood' - without the components even knowing the difference.
+
+```js
+function increaseVotes(paintingId) {
+  // return { type: "INCREASE_VOTES", paintingId }
+  return (dispatch) => {
+    // we need the painting's votes! 
+    const votes = ???
+    fetch(URL, {method: "PATCH", body: JSON.stringify({
+      id: paintingId,
+      votes
+    })})
+  }
+}
+```
+
+Conveniently, thunk actions get called with not only the `dispatch` function, but also the `getState` function.
+
+```js
+function increaseVotes(paintingId) {
+  // return { type: "INCREASE_VOTES", paintingId }
+  return (dispatch, getState) => {
+    // we need the painting's votes! 
+    const votes = getState().paintings.find(p => p.id === paintingId).votes + 1;
+    fetch(URL, {method: "PATCH", body: JSON.stringify({
+      id: paintingId,
+      votes
+    })})
+  }
+}
+```
+
+## Challenge: Thunk Actions
+
+1. Dispatch an action from the `increaseVotes` thunk action to update the painting once the fetch resolves. You may need to update the reducer.
+2. Add a thunk action to update the painting's title and artist info on the server. 
+3. After the promise resolves, update the painting in the store.
+4. Update your thunks - `increaseVotes` and `updatePainting` to use the same helper function once the promise resolves. 
+
+## BONUS Challenge: PaintingContainer Refactor
+
+Notice how our PaintingsContainer has a fairly complicated `render` function. We can simplify it by making each Route render with the `component` prop instead of the `render` prop.
+
+1. refactor the PaintingForm `mapStateToProps` so that you can render it as the `component` prop of the `Route`
+2. refactor the PaintingDetail component in the same way
+3. extract into a component the div wrapping the Searchbar and PaintingsList

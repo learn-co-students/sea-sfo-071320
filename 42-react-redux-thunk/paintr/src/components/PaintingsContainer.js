@@ -1,5 +1,6 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
+import { connect } from 'react-redux'
 
 import PaintingsList from "./PaintingsList";
 import PaintingDetail from "./PaintingDetail";
@@ -7,14 +8,14 @@ import PaintingForm from "./PaintingForm";
 import Searchbar from "./Searchbar";
 import paintingsData from "../paintings.json";
 
+import { fetchPaintings } from '../redux/actions'
+
 class PaintingsContainer extends React.Component {
-  constructor() {
-    super();
-    this.state = {
-      paintings: paintingsData.paintings,
-      searchText: ""
-    };
+
+  componentDidMount() {
+    this.props.fetchPaintings()
   }
+  
 
   voteForPainting = id => {
     let updatePaintings = this.state.paintings.map(painting => {
@@ -97,12 +98,12 @@ class PaintingsContainer extends React.Component {
             render={() => (
               <div className="ui narrow container segment">
                 <Searchbar
-                  value={this.state.searchText}
+                  
                   onChange={this.changeSearch}
                 />
                 <PaintingsList
                   selectPainting={this.selectPainting}
-                  paintings={this.filteredPaintings()}
+                    
                 />
               </div>
             )}
@@ -113,4 +114,4 @@ class PaintingsContainer extends React.Component {
   }
 }
 
-export default PaintingsContainer;
+export default connect(null, { fetchPaintings })(PaintingsContainer);
